@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>냉동기 성능 시뮬레이션 및 ROI 분석 툴</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- React & ReactDOM CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  
+  <!-- Babel CDN -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <!-- Recharts CDN -->
+  <script src="https://unpkg.com/recharts@2.10.3/umd/Recharts.js"></script>
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: #f8fafc;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useMemo } = React;
+    const { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } = window.Recharts;
+
+    function ChillerSimulationApp() {
+      const [projInfo, setProjInfo] = useState({
+        name: "한국알프스 광주공장",
+        dept: "에너지컨설팅팀",
+        engineer: "박재호",
+        address: "광주 광산구 하남산단5번로 33",
+        lat: 35.1967,
+        lng: 126.8024
+      });
+
+      const [mode, setMode] = useState("auto");
+      const [bldgType, setBldgType] = useState("factory");
+
+      const ashraePresets = {
+        office: { name: "업무시설 (Office)", baseTemp: 26.7, start: "07:00", end: "19:00", occRate: 0.85, workDays: "월~금", hours: [416, 360, 396, 400, 412, 384, 416, 396, 400, 416, 380, 416] },
+        factory: { name: "공장/산업시설 (Factory)", baseTemp: 23.3, start: "06:00", end: "22:00", occRate: 0.90, workDays: "월~토", hours: [416, 360, 396, 400, 412, 384, 416, 396, 400, 416, 380, 416] },
+        hospital: { name: "병원/의료시설 (Hospital)", baseTemp: 24.0, start: "00:
